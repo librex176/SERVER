@@ -7,17 +7,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div class="menu">
-        <a href="create.jsp">Create</a>
-        <a href="read.jsp">Read</a>
-        <a href="update.jsp">Update</a>
-        <a href="delete.jsp">Delete</a>
+<head>
+    <title>CRUD de Frutas</title>
+</head>
+<body>
+    <h1>CRUD de Frutas</h1>
+      <div class="menu">
+        <a href="<%= request.getContextPath() %>/fruit/new">Crear</a>
+        <a href="<%= request.getContextPath() %>/fruit/read">Leer</a>
+        <a href="<%= request.getContextPath() %>/fruit/edit">Actualizar</a>
+        <a href="<%= request.getContextPath() %>/fruit/delete">Eliminar</a>
     </div>
-    </body>
+</body>
 </html>

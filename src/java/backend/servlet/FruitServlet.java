@@ -6,6 +6,7 @@ package backend.servlet;
 
 import backend.dao.FruitDAO;
 import backend.model.Fruit;
+import backend.util.DatabaseUtil;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,20 +23,34 @@ import java.sql.SQLException;
  * Type: Controller - Servlet 
  * Use: Make the calls to the DAO and redirect the pages
  */
-@WebServlet(name = "FruitServlet", urlPatterns = {"/FruitServlet"})
+@WebServlet(name = "FruitServlet", urlPatterns = {"/fruit/*"})
 public class FruitServlet extends HttpServlet {
 
     //Properties
     private FruitDAO fruitDAO;
+    private static DatabaseUtil db;
     
     //Initialize the server
     
+    @Override
     public void init()
     {
+        
+        
         fruitDAO = new FruitDAO();
+        try{
+        db = new DatabaseUtil();
+        }catch(Exception ex)
+        {
+            
+        }
+      
+        
+        
     }
     
     //All the action use the GET method
+    @Override
       protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
@@ -43,30 +58,23 @@ public class FruitServlet extends HttpServlet {
 
       
       //index of action 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getServletPath();
+           String action = request.getPathInfo(); // Obtener el sub-path
 
         try {
             switch (action) {
-                case "/new":
-                    showNewForm(request, response);
-                    break;
-                case "/insert":
-                    insertFruit(request, response);
-                    break;
-                case "/delete":
-                    deleteFruit(request, response);
-                    break;
-                case "/edit":
-                    showEditForm(request, response);
-                    break;
-                case "/update":
-                    updateFruit(request, response);
-                    break;
-                default:
-                    listFruit(request, response);
-                    break;
+                case "/new" -> showNewForm(request, response);
+                case "/insert" -> insertFruit(request, response);
+                case "/delete" -> deleteFruit(request, response);
+                case "/edit" -> showEditForm(request, response);
+                case "/update" -> updateFruit(request, response);
+                
+                case "/read" -> listFruit(request, response);
+                    
+                default -> listFruit(request, response);
+                    
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
@@ -82,13 +90,13 @@ public class FruitServlet extends HttpServlet {
             throws SQLException, IOException, ServletException {
         List<Fruit> listFruit = fruitDAO.getAllFruits();
         request.setAttribute("listFruit", listFruit);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("views/read.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("../views/read.jsp");
         dispatcher.forward(request, response);
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("views/create.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("../views/create.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -97,7 +105,7 @@ public class FruitServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Fruit existingFruit = fruitDAO.getAFruitById(id);
         request.setAttribute("fruit", existingFruit);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("views/update.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("../views/update.jsp");
         dispatcher.forward(request, response);
     }
     

@@ -14,24 +14,20 @@ Use: Make the connection with the databse
         
 */
 public class DatabaseUtil {
-    
-     private static Connection con;
 
-    public DatabaseUtil() {
+    private static final String URL = "jdbc:mysql://localhost:3306/shop";
+    private static final String USER = "root";
+    private static final String PASSWORD = "";
+
+    static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DatabaseUtil.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/shop", "root", "password");
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseUtil.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
-    public static Connection getConnection() {
-        return con;
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }
