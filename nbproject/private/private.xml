@@ -5,13 +5,10 @@
         <group>
             <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/web/views/update.jsp</file>
             <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/web/index.jsp</file>
-            <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/src/java/backend/util/DatabaseUtil.java</file>
-            <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/web/views/create.jsp</file>
-            <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/src/java/backend/rmi/interfaces/IVat.java</file>
+            <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/web/views/delete.jsp</file>
             <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/web/views/read.jsp</file>
-            <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/src/java/backend/dao/FruitDAO.java</file>
             <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/src/java/backend/servlet/FruitServlet.java</file>
-            <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/src/java/backend/rmi/classes/Vat.java</file>
+            <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/src/java/backend/rmi/classes/VatService.java</file>
         </group>
     </open-files>
 </project-private>
