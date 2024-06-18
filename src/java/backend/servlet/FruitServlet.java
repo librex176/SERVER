@@ -156,7 +156,7 @@ public class FruitServlet extends HttpServlet {
     }
 
     // Update a register
-    private void updateFruit(HttpServletRequest request, HttpServletResponse response)
+    private void updateFruit(HttpServletRequest request, HttpServletResponse response) 
             throws SQLException, IOException, ServletException {
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
