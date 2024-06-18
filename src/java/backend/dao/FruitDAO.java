@@ -45,6 +45,7 @@ public class FruitDAO {
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 Fruit fruit = new Fruit();
+                fruit.setId(rs.getInt("id"));
                 fruit.setName(rs.getString("name"));
                 fruit.setQuantity(rs.getInt("quantity"));
                 fruit.setPrice(rs.getDouble("price"));

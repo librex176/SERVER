@@ -44,7 +44,7 @@
                     for (backend.model.Fruit fruit : listFruit) {
             %>
                         <tr>
-                            <form action="deleteFruit" method="post">
+                            <form action="kill" method="post">
                                 <td><%= fruit.getId() %><input type="hidden" name="id" value="<%= fruit.getId() %>"></td>
                                 <td><%= fruit.getName() %></td>
                                 <td><%= fruit.getQuantity() %></td>

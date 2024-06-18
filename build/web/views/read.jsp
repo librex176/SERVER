@@ -23,7 +23,18 @@
         th {
             background-color: #f2f2f2;
         }
+        td.price-column {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+        }
     </style>
+    <script>
+        function fillVatForm(price) {
+            document.getElementById("price").value = price;
+            document.getElementById("percent").focus();
+        }
+    </script>
 </head>
 <body>
     <h1>Fruit List</h1>
@@ -37,7 +48,7 @@
             </tr>
         </thead>
         <tbody>
-            <% //Access to the list
+            <% // Access to the list
                 List<Fruit> listFruit = (List<backend.model.Fruit>) request.getAttribute("listFruit");
                 if (listFruit != null) {
                     for (backend.model.Fruit fruit : listFruit) {
@@ -46,7 +57,7 @@
                             <td><%= fruit.getId() %></td>
                             <td><%= fruit.getName() %></td>
                             <td><%= fruit.getQuantity() %></td>
-                            <td><%= fruit.getPrice() %></td>
+                            <td class="price-column" onclick="fillVatForm(<%= fruit.getPrice() %>)"><%= fruit.getPrice() %></td>
                         </tr>
             <%
                     }
@@ -54,20 +65,31 @@
             %>
         </tbody>
     </table>
-        
-        <!-- RMI -->
-        
-        <h2>Calculate the VAT:</h2>
-        
-        
-       <form action="vat" method="post">
+
+    <!-- RMI -->
+    <h2>Calculate the VAT:</h2>
+    <form id="vatForm" action="vat" method="post">
         <label for="price">Price:</label>
         <input type="text" id="price" name="price" required><br>
         <label for="percent">VAT Percentage:</label>
         <input type="text" id="percent" name="percent" required><br>
         <input type="submit" value="Calculate">
     </form>
-        
-        
+
+    <!-- Display VAT Calculation Result -->
+    <%
+        Double vatAmount = (Double) request.getAttribute("vatAmount");
+        Double price = (Double) request.getAttribute("price");
+        Double percent = (Double) request.getAttribute("percent");
+
+        if (vatAmount != null && price != null && percent != null) {
+    %>
+        <h2>VAT Calculation Result:</h2>
+        <p>Price: <%= price %></p>
+        <p>VAT Percentage: <%= percent %>%</p>
+        <p>VAT Amount: <%= vatAmount %></p>
+    <%
+        }
+    %>
 </body>
 </html>

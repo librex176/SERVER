@@ -78,8 +78,11 @@ public class FruitServlet extends HttpServlet {
                 case "/delete" -> listFruitDelete(request, response);
                 case "/edit" -> listFruitEdit(request, response);
                 case "/update" -> updateFruit(request, response);
+                case "/kill" -> deleteFruit(request, response);
                 case "/read" -> listFruit(request, response);
                 case "/vat" -> processVatRequest(request, response);
+                
+                case "/index" -> indexNavigation(request, response);
                 default -> listFruit(request, response);
             }
         } catch (SQLException ex) {
@@ -90,6 +93,12 @@ public class FruitServlet extends HttpServlet {
     //----------------------
     // Navigation
     //-----------------------
+    
+        private void indexNavigation(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Redirect to index page
+        response.sendRedirect(request.getContextPath() + "/index.jsp");
+    }
     
     private void listFruit(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
@@ -143,7 +152,7 @@ public class FruitServlet extends HttpServlet {
 
         Fruit newFruit = new Fruit(name, quantity, price);
         fruitDAO.addFruit(newFruit);
-        response.sendRedirect("list");
+        response.sendRedirect("index");
     }
 
     // Update a register
@@ -156,7 +165,7 @@ public class FruitServlet extends HttpServlet {
 
         Fruit fruit = new Fruit(id, name, quantity, price);
         fruitDAO.updateFruit(fruit);
-        response.sendRedirect("list");
+        response.sendRedirect("index");
     }
 
     // Delete a register
@@ -164,47 +173,37 @@ public class FruitServlet extends HttpServlet {
             throws SQLException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         fruitDAO.deleteFruit(id);
-        response.sendRedirect("list");
+        response.sendRedirect("index");
     }
     
     //---------------------
     // VAT methods
     
-    private void processVatRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            double price = Double.parseDouble(request.getParameter("price"));
-            double percent = Double.parseDouble(request.getParameter("percent"));
-            double vatAmount = 0;
+  private void processVatRequest(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException, SQLException {
+    double price = Double.parseDouble(request.getParameter("price"));
+    double percent = Double.parseDouble(request.getParameter("percent"));
+    double vatAmount = 0;
 
-            try {
-                vatService = (IVat) getServletContext().getAttribute("vatService");
-                if (vatService == null) {
-                    throw new ServletException("VAT service is not available.");
-                }
-                vatAmount = vatService.calculate(price, percent);
-                System.out.println("VAT calculation successful.");
-            } catch (RemoteException e) {
-                e.printStackTrace();
-                throw new ServletException("Error calculating VAT", e);
-            }
-
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>VAT Calculation</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>VAT Calculation Result:</h1>");
-            out.println("<p>Price: " + price + "</p>");
-            out.println("<p>VAT Percentage: " + percent + "%</p>");
-            out.println("<p>VAT Amount: " + vatAmount + "</p>");
-            out.println("<a href=\"vatForm.jsp\">Calculate Again</a>");
-            out.println("</body>");
-            out.println("</html>");
+    try {
+        vatService = (IVat) getServletContext().getAttribute("vatService");
+        if (vatService == null) {
+            throw new ServletException("VAT service is not available.");
         }
+        vatAmount = vatService.calculate(price, percent);
+        System.out.println("VAT calculation successful.");
+    } catch (RemoteException e) {
+        e.printStackTrace();
+        throw new ServletException("Error calculating VAT", e);
     }
+ List<Fruit> listFruit = fruitDAO.getAllFruits();
+        request.setAttribute("listFruit", listFruit);
+    request.setAttribute("vatAmount", vatAmount);
+    request.setAttribute("price", price);
+    request.setAttribute("percent", percent);
+    RequestDispatcher dispatcher = request.getRequestDispatcher("/views/read.jsp");
+    dispatcher.forward(request, response);
+}
 
     @Override
     public String getServletInfo() {
