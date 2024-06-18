@@ -5,6 +5,13 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    Boolean visitedIndex = (Boolean) session.getAttribute("visitedIndex");
+    if (visitedIndex == null || !visitedIndex) {
+        response.sendRedirect("../index.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
