@@ -9,7 +9,6 @@
     session.setAttribute("visitedIndex", true);
 %>
 <!DOCTYPE html>
-<html>
 <head>
     <title>CRUD de Frutas</title>
 </head>
