@@ -8,6 +8,12 @@
 <%
     session.setAttribute("visitedIndex", true);
 %>
+<%
+    // Cookie
+    Cookie myCookie = new Cookie("visitedIndex", "true");
+    myCookie.setMaxAge(60 * 60 * 24); 
+    response.addCookie(myCookie); 
+%>
 <!DOCTYPE html>
 <html>
 <head>

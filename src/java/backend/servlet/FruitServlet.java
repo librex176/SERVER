@@ -14,6 +14,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -155,26 +156,78 @@ public class FruitServlet extends HttpServlet {
         response.sendRedirect("index");
     }
 
-    // Update a register
-    private void updateFruit(HttpServletRequest request, HttpServletResponse response) 
-            throws SQLException, IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
-        double price = Double.parseDouble(request.getParameter("price"));
+    
+   private void updateFruit(HttpServletRequest request, HttpServletResponse response) 
+        throws SQLException, IOException, ServletException {
+    // Leer las cookies del request
+    Cookie[] cookies = request.getCookies();
+    boolean cookieFound = false;
 
-        Fruit fruit = new Fruit(id, name, quantity, price);
-        fruitDAO.updateFruit(fruit);
-        response.sendRedirect("index");
+    if (cookies != null) {
+        for (Cookie cookie : cookies) {
+            if ("visitedIndex".equals(cookie.getName()) && "true".equals(cookie.getValue())) {
+                cookieFound = true;
+                break;
+            }
+        }
     }
+
+    if (!cookieFound) {
+       
+        response.sendRedirect("index.jsp"); 
+        return; 
+    }
+
+    
+    int id = Integer.parseInt(request.getParameter("id"));
+    String name = request.getParameter("name");
+    int quantity = Integer.parseInt(request.getParameter("quantity"));
+    double price = Double.parseDouble(request.getParameter("price"));
+
+    Fruit fruit = new Fruit(id, name, quantity, price);
+    fruitDAO.updateFruit(fruit);
+    response.sendRedirect("index"); 
+}
+
 
     // Delete a register
-    private void deleteFruit(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        fruitDAO.deleteFruit(id);
-        response.sendRedirect("index");
+    // Delete a register
+private void deleteFruit(HttpServletRequest request, HttpServletResponse response)
+        throws SQLException, IOException, ServletException {
+    // Obtener todas las cookies del request
+    Cookie[] cookies = request.getCookies();
+    boolean cookieFound = false;
+
+    // Buscar la cookie específica
+    if (cookies != null) {
+        for (Cookie cookie : cookies) {
+            if ("visitedIndex".equals(cookie.getName()) && "true".equals(cookie.getValue())) {
+                cookieFound = true;
+                break;
+            }
+        }
     }
+
+    // Si la cookie requerida no se encuentra, redireccionar al usuario
+    if (!cookieFound) {
+        // Redirigir al usuario a la página de inicio o de error
+        response.sendRedirect("index.jsp"); // Cambia a la página que prefieras
+        return; // Detener la ejecución para evitar que se realice la acción de eliminación
+    }
+
+    // Si la cookie existe y es válida, proceder con la eliminación del registro
+    int id = Integer.parseInt(request.getParameter("id"));
+    try {
+        fruitDAO.deleteFruit(id);
+    } catch (SQLException e) {
+        e.printStackTrace();
+        // Considerar manejo de errores específicos o redireccionar a una página de error
+        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error deleting fruit.");
+        return;
+    }
+    response.sendRedirect("index"); // Redirigir a la página principal o de confirmación tras la eliminación exitosa
+}
+
     
     //---------------------
     // VAT methods
