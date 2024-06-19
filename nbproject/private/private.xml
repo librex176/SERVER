@@ -3,12 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/web/views/update.jsp</file>
-            <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/web/index.jsp</file>
-            <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/web/views/delete.jsp</file>
-            <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/web/views/read.jsp</file>
-            <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/src/java/backend/servlet/FruitServlet.java</file>
-            <file>file:/C:/Users/aguil/Proyectos/Java/SERVER/src/java/backend/rmi/classes/VatService.java</file>
+            <file>file:/C:/Escuela/Avanzada%202/p3/ejemplos/crudbuenisimo/SERVER/web/index.jsp</file>
+            <file>file:/C:/Escuela/Avanzada%202/p3/ejemplos/crudbuenisimo/SERVER/src/java/backend/servlet/FruitServlet.java</file>
+            <file>file:/C:/Escuela/Avanzada%202/p3/ejemplos/crudbuenisimo/SERVER/web/views/update.jsp</file>
+            <file>file:/C:/Escuela/Avanzada%202/p3/ejemplos/crudbuenisimo/SERVER/web/menu.jsp</file>
+            <file>file:/C:/Escuela/Avanzada%202/p3/ejemplos/crudbuenisimo/SERVER/src/java/backend/dao/FruitDAO.java</file>
+            <file>file:/C:/Escuela/Avanzada%202/p3/ejemplos/crudbuenisimo/SERVER/web/views/create.jsp</file>
+            <file>file:/C:/Escuela/Avanzada%202/p3/ejemplos/crudbuenisimo/SERVER/web/views/delete.jsp</file>
+            <file>file:/C:/Escuela/Avanzada%202/p3/ejemplos/crudbuenisimo/SERVER/web/views/read.jsp</file>
         </group>
     </open-files>
 </project-private>

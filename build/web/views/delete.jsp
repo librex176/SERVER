@@ -4,6 +4,21 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%
+    
+   
+    Boolean visitedIndex = (Boolean) session.getAttribute("visitedIndex");
+    if (visitedIndex == null || !visitedIndex) {
+        response.sendRedirect("../index.jsp");
+        return;
+    }
+    else
+    {
+            session.setAttribute("visitedIndex", false);
+            
+            
+    }
+%>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

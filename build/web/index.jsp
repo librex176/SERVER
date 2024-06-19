@@ -9,6 +9,9 @@
     session.setAttribute("visitedIndex", true);
 %>
 <!DOCTYPE html>
+<%
+    session.setAttribute("visitedIndex", false);
+%>
 <head>
     <title>CRUD de Frutas</title>
 </head>

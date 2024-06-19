@@ -18,6 +18,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -174,7 +175,7 @@ public class FruitServlet extends HttpServlet {
 
     if (!cookieFound) {
        
-        response.sendRedirect("index.jsp"); 
+     response.sendRedirect("index");
         return; 
     }
 
@@ -208,14 +209,14 @@ private void deleteFruit(HttpServletRequest request, HttpServletResponse respons
         }
     }
 
-    // Si la cookie requerida no se encuentra, redireccionar al usuario
+     //Si la cookie requerida no se encuentra, redireccionar al usuario
     if (!cookieFound) {
         // Redirigir al usuario a la página de inicio o de error
         response.sendRedirect("index.jsp"); // Cambia a la página que prefieras
         return; // Detener la ejecución para evitar que se realice la acción de eliminación
     }
 
-    // Si la cookie existe y es válida, proceder con la eliminación del registro
+    // Si la cookie existe y es valida, proceder con la eliminación del registro
     int id = Integer.parseInt(request.getParameter("id"));
     try {
         fruitDAO.deleteFruit(id);
@@ -253,6 +254,8 @@ private void deleteFruit(HttpServletRequest request, HttpServletResponse respons
         request.setAttribute("listFruit", listFruit);
     request.setAttribute("vatAmount", vatAmount);
     request.setAttribute("price", price);
+    HttpSession session = request.getSession();
+        session.setAttribute("visitedIndex", true);
     request.setAttribute("percent", percent);
     RequestDispatcher dispatcher = request.getRequestDispatcher("/views/read.jsp");
     dispatcher.forward(request, response);
