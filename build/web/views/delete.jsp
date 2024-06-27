@@ -1,22 +1,13 @@
-<%@page import="java.util.List"%>
-<%@page import="backend.model.Fruit"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="backend.model.Fruit" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    
-   
     Boolean visitedIndex = (Boolean) session.getAttribute("visitedIndex");
     if (visitedIndex == null || !visitedIndex) {
         response.sendRedirect("../index.jsp");
         return;
-    }
-    else
-    {
-            session.setAttribute("visitedIndex", false);
-            
-            
     }
 %>
 <html>
@@ -54,9 +45,9 @@
         </thead>
         <tbody>
             <% // Access to the list
-                List<Fruit> listFruit = (List<backend.model.Fruit>) request.getAttribute("listFruit");
+                List<Fruit> listFruit = (List<Fruit>) request.getAttribute("listFruit");
                 if (listFruit != null) {
-                    for (backend.model.Fruit fruit : listFruit) {
+                    for (Fruit fruit : listFruit) {
             %>
                         <tr>
                             <form action="kill" method="post">

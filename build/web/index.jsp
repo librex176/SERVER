@@ -8,20 +8,27 @@
 <%
     session.setAttribute("visitedIndex", true);
 %>
+
 <!DOCTYPE html>
-<%
-    session.setAttribute("visitedIndex", false);
-%>
+<html>
 <head>
-    <title>CRUD de Frutas</title>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <h1>CRUD de Frutas</h1>
-      <div class="menu">
-        <a href="<%= request.getContextPath() %>/menu.jsp">----->Menu<-----</a>
-
-
-        
-    </div>
+    <h2>Iniciar Sesion</h2>
+    <form action="user" method="post">
+        <div class="container">
+            <input type="text" placeholder="Usuario" name="username" required>
+            <input type="password" placeholder="Contraseña" name="password" required>
+            <button type="submit">Login</button>
+        </div>
+        <p style="color:red;">${errorMessage}</p>
+    </form>
 </body>
 </html>
+
+
+ <%
+    session.setAttribute("visitedIndex", false);
+%>
